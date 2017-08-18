@@ -1,0 +1,13 @@
+# ignore .git
+    */**/.git
+    */**/.idea
+    */**/.gitkeep
+    */**/.gitignore
+    9douyu-module/public/static
+    9douyu-module/public/admin
+    9douyu-module/public/css
+    9douyu-module/public/fonts
+    9douyu-module/public/images
+    9douyu-module/public/js
+    9douyu-module/public/resources
+    9douyu-module/public/theme

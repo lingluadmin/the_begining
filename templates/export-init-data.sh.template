@@ -1,0 +1,58 @@
+#!/bin/bash
+
+set -e
+
+prj_path=$(cd $(dirname $(dirname $0)); pwd -P)
+SCRIPTFILE=`basename $0`
+
+export MYSQL_PWD='{{ mysql_password }}'
+
+export_path=data/mysql-import/auto-export
+
+rm -f $export_path/*
+
+function _run_sql() {
+    local db=$1
+    local sql=$2
+    cmd="mysql -N -h{{ mysql_host }} -u{{ mysql_user }} -P{{ mysql_port }} $db -e \"$sql\""
+    ret=$(eval "$cmd")
+    echo $ret
+}
+
+function build_uid_list() {
+    sql="select id from core_user where phone in $phone_list"
+    uid_list=$(_run_sql "jiudouyu_core_db" "$sql")
+    uid_list=$(_join_lines "$uid_list")
+    echo $uid_list
+}
+
+function _join_file() {
+    local file=$1
+    local content=$(cat $file)
+    list=$(_join_lines "$content")
+    echo $list
+}
+
+function _join_lines() {
+    local content=$1
+    list=$(echo $content | tr ' ' ',' | sed -r "s/,/',\ '/g")
+    list="('$list')"
+    echo $list
+}
+
+phone_list=$(_join_file "$prj_path/data/mysql-import/phone-list")
+uid_list=$(build_uid_list)
+echo $phone_list > tmp/phone-list
+echo $uid_list > tmp/uid-list
+{% for query in query_list %}
+{% for table, item in query.tables.iteritems() %}
+mysqldump -t --set-gtid-purged=OFF -h{{ mysql_host }} -u{{ mysql_user }} -P{{ mysql_port }} {{ query.mysql_db }} {{ table }} --where="{{ item.key }} in ${{ item.key_list}} " >> $export_path/{{ query.mysql_db }}.{{ table }}.sql
+{% endfor %}
+{% endfor %}
+
+
+{% for query in query_all_list %}
+{% for table, item in query.tables.iteritems() %}
+mysqldump -t --set-gtid-purged=OFF -h{{ mysql_host }} -u{{ mysql_user }} -P{{ mysql_port }} {{ query.mysql_db }} {{ table }}  >> $export_path/{{ query.mysql_db }}.{{ table }}.sql
+{% endfor %}
+{% endfor %}

@@ -1,0 +1,98 @@
+mysql:
+    mysql_host: 'rr-2zeap9jp480wx4j12.mysql.rds.aliyuncs.com'
+    mysql_port: '3306'
+    mysql_user: 'jiudouyu_r'
+    mysql_password: 'uoE4WxwUwAxz3JR'
+    dst_sql_file: 'data/mysql-import/init.sql'
+    query_list:
+        -
+            mysql_db: 'jiudouyu_core_db'
+            tables:
+                core_user:
+                    key: 'phone'
+                    key_list: 'phone_list'
+                core_auth_card:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                core_bank_card:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                core_order:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                core_current_account:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                core_current_interest_history:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                core_fund_history:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                core_invest:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                core_refund_record:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+        -
+            mysql_db: 'jiudouyu_module_db'
+            tables:
+                module_user_info:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                module_user_bonus:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                module_current_invest:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                module_invest:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                module_invite:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+                module_partner:
+                    key: 'user_id'
+                    key_list: 'uid_list'
+
+    query_all_list:
+        -
+            mysql_db: 'jiudouyu_core_db'
+            tables:
+                core_bank:
+                core_credit_assign_project:
+                core_project:
+                core_system_config:
+                core_order_extend:
+        -
+            mysql_db: 'jiudouyu_module_db'
+            tables:
+                module_bank:
+                module_ad:
+                module_ad_position:
+                module_app_button:
+                module_article:
+                module_bank_list:
+                module_bonus:
+                module_category:
+                module_credit_building_mortgage:
+                module_credit_factoring:
+                module_credit_group:
+                module_credit_loan:
+                module_credit_nine:
+                module_credit_third:
+                module_pay_limit:
+                module_system_config:
+                module_current_project:
+                module_current_rate:
+
+
+
+
+
+
+
+
+

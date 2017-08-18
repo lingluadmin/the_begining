@@ -1,0 +1,35 @@
+{% set dev_wildcard_host = vars.dev_wildcard_hosts[hostname] %}
+site_list: 
+{% for developer_name, site in vars.site_list.iteritems() %}
+    {{ site.developer_name }}:
+
+        developer_name: '{{ site.developer_name }}'
+        dev_wildcard_host: '{{ dev_wildcard_host }}'
+
+        core_domain: 'core.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        module_domain: 'module.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        service_domain: 'service.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+
+        www_domain: 'www.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        wx_domain: 'wx.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        ios_domain: 'ios.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        android_domain: 'android.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        api_domain: 'api.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        admin_domain: 'admin.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+
+        cdn_domain: 'img1.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        static_domain: 'static.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+        res_domain: 'res.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+
+        ios_domain_pre: 'ios.{{ site.developer_name }}'
+        android_domain_pre: 'android.{{ site.developer_name }}'
+
+        mysql_host: '{{ host_ip }}'
+        mysql_port: '{{ site.mysql_port }}'
+        mysql_database: '9dy_db'
+        mysql_user: 'jiudouyu_w'
+        mysql_password: '123qwe'
+
+        redis_host: '{{ site.developer_name }}-9douyu-redis'
+        cookie_domain: '.{{ site.developer_name }}.{{ dev_wildcard_host }}'
+{% endfor %}
